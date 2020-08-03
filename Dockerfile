@@ -1,9 +1,9 @@
 FROM alpine:latest
 
-ENV WEECHAT_VERSION 2.7.1
+ENV WEECHAT_VERSION 2.9
 ENV WEECHAT_HOME /weechat
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS 2
-ENV S6_VERSION v1.22.1.0
+ENV S6_VERSION v2.0.0.1
 
 RUN GPG_KEYS=A9AB5AB778FA5C3522FD0378F82F4B16DEC408F8 \
 	&& set -e \
@@ -42,7 +42,7 @@ RUN GPG_KEYS=A9AB5AB778FA5C3522FD0378F82F4B16DEC408F8 \
 	&& export GNUPGHOME="$(mktemp -d)" \
 	&& found=''; \
 	for server in \
-		pgp.key-server.io \
+		hkps://keys.openpgp.org \
 	; do \
 		echo "Fetching GPG key $GPG_KEYS from $server"; \
 		gpg --keyserver "$server" --keyserver-options timeout=10 --recv-keys "$GPG_KEYS" && found=yes && break; \
